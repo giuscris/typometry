@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Typemetry</title>
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    <body>
+        <div class="header panel">📏 <a href="https://github.com/giuscris/typemetry">Typemetry.js</a></div>
+        <canvas id="canvas"></canvas>
+        <div class="controls panel">
+            <div>
+                <input name="fontFamily" value="Georgia" placeholder="Font Family">
+                <span class="nowrap">
+                    <select name="fontWeight">
+                        <option value="100">Extra Thin (100)</option>
+                        <option value="200">Thin (200)</option>
+                        <option value="300">Light (300)</option>
+                        <option value="400" selected>Normal (400)</option>
+                        <option value="500">Medium (500)</option>
+                        <option value="600">Bold (600)</option>
+                        <option value="700">Heavy (700)</option>
+                        <option value="800">Black (800)</option>
+                        <option value="900">Extra Black (900)</option>
+                    </select>
+                    <select name="fontStyle">
+                        <option value="normal">Regular</option>
+                        <option value="italic">Italic</option>
+                    </select>
+                </span>
+                <span class="nowrap">
+                    <span id="fontSize"></span>
+                    <span id="status">⏳</span>
+                </span>
+            </div>
+            <span class="combo nowrap"><input type="color" name="baselineColor" value="#3bceff"> <label><input type="checkbox" name="baseline" checked> Baseline</label> <span class="value" data-of="baseline"></span></span>
+            <span class="combo nowrap"><input type="color" name="ascentColor" value="#3bceff"> <label><input type="checkbox" name="ascent" checked> Ascent</label> <span class="value" data-of="ascent"></span></span>
+            <span class="combo nowrap"><input type="color" name="descentColor" value="#3bceff"> <label><input type="checkbox" name="descent" checked> Descent</label> <span class="value" data-of="descent"></span></span>
+            <span class="combo nowrap"><input type="color" name="xHeightColor" value="#3bceff"> <label><input type="checkbox" name="xHeight" checked> x-Height</label> <span class="value" data-of="xHeight"></span></span>
+            <span class="combo nowrap"><input type="color" name="capHeightColor" value="#ff943d"> <label><input type="checkbox" name="capHeight" checked> Capital Height</label> <span class="value" data-of="capHeight"></span></span>
+            <span class="combo nowrap"><input type="color" name="figHeightColor" value="#ff943d"> <label><input type="checkbox" name="figHeight"> Figure Height</label> <span class="value" data-of="figHeight"></span></span>
+            <span class="combo nowrap"><input type="color" name="tittleHeightColor" value="#ff943d"> <label><input type="checkbox" name="tittleHeight"> Tittle Height</label> <span class="value" data-of="tittleHeight"></span></span>
+            <span class="combo nowrap"><input type="color" name="emTopColor" value="#ff3dc2"> <label><input type="checkbox" name="emTop" checked> Top</label> <span class="value" data-of="emTop"></span></span>
+            <span class="combo nowrap"><input type="color" name="emBottomColor" value="#ff3dc2"> <label><input type="checkbox" name="emBottom" checked> Bottom</label> <span class="value" data-of="emBottom"></span></span>
+            <span class="combo nowrap"><input type="color" name="emMiddleColor" value="#ff3dc2"> <label><input type="checkbox" name="emMiddle"> Middle</label> <span class="value" data-of="emMiddle"></span></span>
+            <span class="combo nowrap"><input type="color" name="bboxTopColor" value="#3dff87"> <label><input type="checkbox" name="bboxTop" checked> BBox Top</label> <span class="value" data-of="bboxTop"></span></span>
+            <span class="combo nowrap"><input type="color" name="bboxBottomColor" value="#3dff87"> <label><input type="checkbox" name="bboxBottom" checked> BBox Bottom</label> <span class="value" data-of="bboxBottom"></span></span>
+        </div>
+        <script src="assets/js/demo.js" type="module"></script>
+    </body>
+</html>

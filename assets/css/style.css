@@ -1,0 +1,84 @@
+body {
+    font-family: 'SFMono-Regular', 'SF Mono', 'Cascadia Mono', 'Liberation Mono', Menlo, Consolas, monospace;
+    font-size: 18px;
+    font-style: normal;
+    margin: 0;
+}
+
+a {
+    color: inherit;
+}
+
+canvas {
+    display: block;
+    margin: 0 auto;
+    font-variant-ligatures: none;
+    font-variant-numeric: normal;
+    font-kerning: none;
+}
+
+input, select {
+    border: 1px solid #3bceff;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    background-color: transparent;
+}
+
+input[type=color] {
+    border: 0;
+    padding: 0.25rem 0;
+    vertical-align: middle;
+}
+
+::selection {
+    background-color: #fffc3b;
+}
+
+::placeholder {
+    color: #9e9e9e;
+}
+
+.panel {
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    user-select: none;
+    text-align: center;
+}
+
+.nowrap {
+    white-space: nowrap;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    color: #3bceff;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.controls {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem 4rem;
+    line-height: 1.5;
+}
+
+.combo {
+    display: inline-block;
+    margin-inline-end: 2rem;
+    font-size: 0.875rem;
+}
+
+.value {
+    color: #9e9e9e;
+}
