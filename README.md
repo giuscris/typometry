@@ -1,7 +1,8 @@
 # 📏 Typemetry
 
-**A tiny JavaScript library to get typographic measures.** [DEMO 😎](https://giuscris.github.io/typemetry)
+**A tiny JavaScript module to get typographic measures.** [DEMO 😎](https://giuscris.github.io/typemetry)
 
+![](assets/images/typemetry.png)
 
 ## Usage
 
