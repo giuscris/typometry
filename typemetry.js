@@ -1,3 +1,7 @@
+function getFontProperty(options) {
+    return `${options.fontStyle} ${options.fontWeight} ${options.fontSize}px "${options.fontFamily}"`;
+}
+
 function getPixelBoundaries(context) {
     const width = context.canvas.width;
     const height = context.canvas.height;
@@ -27,9 +31,7 @@ function getPixelBoundaries(context) {
         top: minY,
         bottom: maxY,
         left: minX,
-        right: maxX,
-        width: maxX - minX,
-        height: maxY - minY,
+        right: maxX
     };
 }
 
@@ -38,7 +40,7 @@ function getBoundingBox(options) {
     canvas.width = 0;
     canvas.height = 0;
     const context = canvas.getContext('2d');
-    context.font = `${options.fontStyle} ${options.fontWeight} ${options.fontSize}px "${options.fontFamily}"`;
+    context.font = getFontProperty(options);
     context.textBaseline = 'alphabetic';
     const obj = context.measureText('');
     return  {
@@ -55,12 +57,12 @@ function measureText(text, options) {
     const context = canvas.getContext('2d');
     canvas.height = height;
     canvas.width = width;
-    context.font = `${options.fontStyle} ${options.fontWeight} ${options.fontSize}px "${options.fontFamily}"`;
+    context.font = getFontProperty(options);
     context.textBaseline = options.baseline;
     context.textAlign = 'center';
     context.fillText(text, width / 2, height / 2);
 
-    return getPixelBoundaries(context);
+    return {baseline: height / 2, ...getPixelBoundaries(context)};
 }
 
 function measureFont(options) {
@@ -79,15 +81,15 @@ function measureFont(options) {
 
     return {
         baseline: 0,
-        ascent: (x.bottom - d.top) / options.fontSize,
-        descent: (x.bottom - p.bottom) / options.fontSize,
-        xHeight: x.height / options.fontSize,
-        capHeight: H.height / options.fontSize,
-        figHeight: fig.height / options.fontSize,
-        tittleHeight: (x.bottom - i.top) / options.fontSize,
-        emTop: (top.bottom - x.bottom) / options.fontSize,
-        emBottom: (btm.bottom - x.bottom) / options.fontSize,
-        emMiddle: ((top.bottom + btm.bottom) / 2 - x.bottom) / options.fontSize,
+        ascent: (x.baseline - d.top) / options.fontSize,
+        descent: (x.baseline - p.bottom) / options.fontSize,
+        xHeight: (x.baseline - x.top) / options.fontSize,
+        capHeight: (H.baseline - H.top) / options.fontSize,
+        figHeight: (fig.baseline - fig.top) / options.fontSize,
+        tittleHeight: (x.baseline - i.top) / options.fontSize,
+        emTop: (top.bottom - x.baseline) / options.fontSize,
+        emBottom: (btm.bottom - x.baseline) / options.fontSize,
+        emMiddle: ((top.bottom + btm.bottom) / 2 - x.baseline) / options.fontSize,
         emHeight: (top.bottom - btm.bottom) / options.fontSize,
         bboxTop: bbox.top / options.fontSize || undefined,
         bboxBottom: bbox.bottom / options.fontSize || undefined,
