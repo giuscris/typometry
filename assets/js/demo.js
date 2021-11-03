@@ -131,7 +131,7 @@ function render() {
     // Draw bbox bottom line
     if (options.bboxBottom && metrics.bboxBottom !== undefined) drawLine(context, baseline - metrics.bboxBottom * fontSize, options.bboxBottomColor);
 
-    context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px ${options.fontFamily}`;
+    context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px "${options.fontFamily}"`;
     context.textAlign = 'center';
     context.fillText('ÁIl1Fdgpxi', width / 2, baseline);
 
