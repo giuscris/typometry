@@ -49,10 +49,27 @@ function getBoundingBox(options) {
     };
 }
 
+function getLineHeight(options) {
+    const p = document.createElement('p');
+    Object.assign(p.style, {
+        font: getFontProperty(options),
+        lineHeight: 'normal',
+        position: 'absolute',
+        left: '-9999px',
+        padding: 0,
+        border: 0
+    });
+    p.innerHTML = 'x';
+    document.body.appendChild(p);
+    const rect = p.getBoundingClientRect();
+    document.body.removeChild(p);
+    return rect.height / options.fontSize;
+}
+
 function measureText(text, options) {
     const canvas = document.createElement('canvas');
-    const height = options.fontSize * 2.5;
-    const width = text.length * options.fontSize * 2;
+    const height = options.fontSize * options.lineHeight * 2;
+    const width = options.fontSize * (text.length + 1);
 
     const context = canvas.getContext('2d');
     canvas.height = height;
@@ -66,18 +83,19 @@ function measureText(text, options) {
 }
 
 function measureFont(options) {
-    const x = measureText('x', {...options, baseline: 'alphabetic'});
-    const d = measureText('d', {...options, baseline: 'alphabetic'});
-    const p = measureText('p', {...options, baseline: 'alphabetic'});
-    const H = measureText('H', {...options, baseline: 'alphabetic'});
-    const i = measureText('i', {...options, baseline: 'alphabetic'});
-
-    const fig = measureText('1', {...options, baseline: 'alphabetic'});
-
-    const top = measureText('x', {...options, baseline: 'top'})
-    const btm = measureText('x', {...options, baseline: 'bottom'});
-
     const bbox = getBoundingBox(options);
+    const lineHeight = getLineHeight(options);
+
+    const x = measureText('x', {...options, lineHeight, baseline: 'alphabetic'});
+    const d = measureText('d', {...options, lineHeight, baseline: 'alphabetic'});
+    const p = measureText('p', {...options, lineHeight, baseline: 'alphabetic'});
+    const H = measureText('H', {...options, lineHeight, baseline: 'alphabetic'});
+    const i = measureText('i', {...options, lineHeight, baseline: 'alphabetic'});
+
+    const fig = measureText('1', {...options, lineHeight, baseline: 'alphabetic'});
+
+    const top = measureText('x', {...options, lineHeight, baseline: 'top'});
+    const btm = measureText('x', {...options, lineHeight, baseline: 'bottom'});
 
     return {
         baseline: 0,
@@ -93,7 +111,8 @@ function measureFont(options) {
         emHeight: (top.bottom - btm.bottom) / options.fontSize,
         bboxTop: bbox.top / options.fontSize || undefined,
         bboxBottom: bbox.bottom / options.fontSize || undefined,
-        bboxHeight: (bbox.top - bbox.bottom) / options.fontSize || undefined
+        bboxHeight: (bbox.top - bbox.bottom) / options.fontSize || undefined,
+        lineHeight
     };
 }
 

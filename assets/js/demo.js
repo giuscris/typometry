@@ -17,7 +17,8 @@ const METRICS = {
         emHeight: 1,
         bboxTop: 0.917,
         bboxBottom: -0.219,
-        bboxHeight: 1.136
+        bboxHeight: 1.136,
+        lineHeight: 1.136
     }
 };
 
@@ -26,6 +27,8 @@ const controls = document.querySelector('.controls');
 
 const inputs = controls.querySelectorAll('input, select');
 const status = controls.querySelector('#status');
+const fontSizeStatus = controls.querySelector('#fontSize');
+const lineHeightStatus = controls.querySelector('#lineHeight');
 
 function getOptions() {
     const options = {};
@@ -69,6 +72,10 @@ function drawLine(context, y, color) {
     context.restore();
 }
 
+function round(number, decimals) {
+    return +number.toFixed(decimals);
+}
+
 function render() {
     const options = getOptions();
 
@@ -83,7 +90,7 @@ function render() {
     const width = context.canvas.width / DPR;
     const height = context.canvas.height / DPR;
 
-    const fontSize = Math.round(Math.min(width * 0.125, height * 0.25));
+    const fontSize = Math.round(Math.min(width * 0.125, height / metrics.lineHeight * 0.5));
     const baseline = height / 2 + metrics.emMiddle * fontSize;
 
     context.clearRect(0, 0, width, height);
@@ -128,7 +135,8 @@ function render() {
     context.textAlign = 'center';
     context.fillText('ÁIl1Fdgpxi', width / 2, baseline);
 
-    controls.querySelector('#fontSize').innerHTML = `${fontSize}px`;
+    fontSizeStatus.innerHTML = `${fontSize}px`;
+    lineHeightStatus.innerHTML = `${round(metrics.lineHeight * 100, 1)}%`;
     controls.querySelectorAll('.value').forEach((element) => element.innerHTML = metrics[element.getAttribute('data-of')]);
 }
 
@@ -136,6 +144,8 @@ function render() {
 for (const input of inputs) {
     input.addEventListener('change', () => {
         status.innerHTML = '⏳';
+        fontSizeStatus.innerHTML = '…';
+        lineHeightStatus.innerHTML = '…';
         setTimeout(() => {
             render();
             status.innerHTML = '✅';

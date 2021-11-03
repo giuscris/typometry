@@ -37,7 +37,8 @@ This will return an object like this:
     emHeight: 1,
     bboxTop: 0.917,
     bboxBottom: -0.219,
-    bboxHeight: 1.136
+    bboxHeight: 1.136,
+    lineHeight: 1.136
 }
 ```
 
@@ -66,5 +67,6 @@ const actualXHeight = metrics.xHeight * fontSize; // 8.658px
 12. **bboxTop:** the position of the bounding box top, i.e. the highest vertical extension of the font (only available on recent browsers, see [Can I Use](https://caniuse.com/mdn-api_textmetrics_fontboundingboxascent)).
 13. **bboxTop:** the position of the bounding box top, i.e. the lowest vertical extension of the font (only available on recent browsers, see [Can I Use](https://caniuse.com/mdn-api_textmetrics_fontboundingboxdescent)).
 14. **bboxHeight:** the height of bounding box (same as `bboxTop - bboxBottom`).
+15. **lineHeight:** line height assigned by the browser (as with the CSS declaration `line-height: normal;`), should be equal to `bboxHeight`.
 
 📌 All distances are computed from the baseline so that positive measures are above the line, and the negative below.
