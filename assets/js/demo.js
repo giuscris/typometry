@@ -23,6 +23,7 @@ const METRICS = {
 };
 
 const canvas = document.getElementById('canvas');
+const header = document.querySelector('.header');
 const controls = document.querySelector('.controls');
 
 const inputs = controls.querySelectorAll('input, select');
@@ -51,7 +52,7 @@ function getContext() {
     const context = canvas.getContext('2d');
 
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = Math.max(0, window.innerHeight - header.offsetHeight - controls.offsetHeight);
 
     canvas.style.width = canvas.width + 'px';
     canvas.style.height = canvas.height + 'px';

@@ -54,10 +54,6 @@ input[type=color] {
 }
 
 .header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
     padding: 1rem;
     color: #3bceff;
     font-size: 2rem;
