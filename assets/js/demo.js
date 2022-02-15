@@ -162,7 +162,7 @@ function render() {
         Object.assign(textInput.style, {
             display: 'block',
             top: `${header.offsetHeight + baseline - metrics.bboxTop * fontSize}px`,
-            fontFamily: options.fontFamily,
+            fontFamily: `"${options.fontFamily}"`,
             fontStyle: options.fontStyle,
             fontWeight: options.fontWeight,
             fontSize: `${fontSize}px`,
