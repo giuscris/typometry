@@ -92,6 +92,9 @@ function measureFont(options) {
     const H = measureText('H', {...options, lineHeight, baseline: 'alphabetic'});
     const i = measureText('i', {...options, lineHeight, baseline: 'alphabetic'});
 
+    const O = measureText('O', {...options, lineHeight, baseline: 'alphabetic'});
+    const A = measureText('A', {...options, lineHeight, baseline: 'alphabetic'});
+
     const fig = measureText('1', {...options, lineHeight, baseline: 'alphabetic'});
 
     const top = measureText('x', {...options, lineHeight, baseline: 'top'});
@@ -105,6 +108,8 @@ function measureFont(options) {
         capHeight: (H.baseline - H.top) / options.fontSize,
         figHeight: (fig.baseline - fig.top) / options.fontSize,
         tittleHeight: (x.baseline - i.top) / options.fontSize,
+        roundOvershoot: (x.baseline - O.top) / options.fontSize,
+        pointedOvershoot: (x.baseline - A.top) / options.fontSize,
         emTop: (top.bottom - x.bottom) / options.fontSize,
         emBottom: (btm.bottom - x.bottom) / options.fontSize,
         emMiddle: ((top.bottom + btm.bottom) / 2 - x.bottom) / options.fontSize,

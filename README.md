@@ -31,6 +31,8 @@ This will return an object like this:
     capHeight: 0.692,
     figHeight: 0.539,
     tittleHeight: 0.739,
+    roundOvershoot: 0.71,
+    pointedOvershoot: 0.703,
     emTop: 0.778,
     emBottom: -0.222,
     emMiddle: 0.278,
@@ -60,13 +62,15 @@ const actualXHeight = metrics.xHeight * fontSize; // 8.658px
 5. **capHeight:** the height of capital letters (`H` is used for reference).
 6. **figHeight:** the height of figures (`1`, digit one, is used for reference).
 7. **tittleHeight:** the height of the dot above `i`.
-8. **emTop:** the top of the em square.
-9. **emBottom:** the bottom of the em square.
-10. **emMiddle:** the middle of the em square (is useful to center text vertically).
-11. **emHeight:** the height of em square (same as `emTop - emBottom`, should be `1`).
-12. **bboxTop:** the position of the bounding box top, i.e. the highest vertical extension of the font (only available on recent browsers, see [Can I Use](https://caniuse.com/mdn-api_textmetrics_fontboundingboxascent)).
-13. **bboxTop:** the position of the bounding box top, i.e. the lowest vertical extension of the font (only available on recent browsers, see [Can I Use](https://caniuse.com/mdn-api_textmetrics_fontboundingboxdescent)).
-14. **bboxHeight:** the height of bounding box (same as `bboxTop - bboxBottom`).
-15. **lineHeight:** line height assigned by the browser (as with the CSS declaration `line-height: normal;`), should be equal to `bboxHeight`.
+8. **roundOvershoot:** the [overshoot](https://en.wikipedia.org/wiki/Overshoot_(typography)) height of round capital letters like `O`.
+9. **pointedOvershoot:** the [overshoot](https://en.wikipedia.org/wiki/Overshoot_(typography)) height of pointed capital letters like `A`.
+10. **emTop:** the top of the em square.
+11. **emBottom:** the bottom of the em square.
+12. **emMiddle:** the middle of the em square (is useful to center text vertically).
+13. **emHeight:** the height of em square (same as `emTop - emBottom`, should be `1`).
+14. **bboxTop:** the position of the bounding box top, i.e. the highest vertical extension of the font (only available on recent browsers, see [Can I Use](https://caniuse.com/mdn-api_textmetrics_fontboundingboxascent)).
+15. **bboxTop:** the position of the bounding box top, i.e. the lowest vertical extension of the font (only available on recent browsers, see [Can I Use](https://caniuse.com/mdn-api_textmetrics_fontboundingboxdescent)).
+16. **bboxHeight:** the height of bounding box (same as `bboxTop - bboxBottom`).
+17. **lineHeight:** line height assigned by the browser (as with the CSS declaration `line-height: normal;`), should be equal to `bboxHeight`.
 
 📌 All distances are computed from the baseline so that positive measures are above the line, and the negative below.

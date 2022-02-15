@@ -11,6 +11,8 @@ const METRICS = {
         capHeight: 0.693,
         figHeight: 0.54,
         tittleHeight: 0.74,
+        roundOvershoot: 0.71,
+        pointedOvershoot: 0.703,
         emTop: 0.778,
         emBottom: -0.222,
         emMiddle: 0.278,
@@ -117,6 +119,12 @@ function render() {
     // Draw tittle line
     if (options.tittleHeight) drawLine(context, baseline - metrics.tittleHeight * fontSize, options.tittleHeightColor);
 
+    // Draw round overshoot line
+    if (options.roundOvershoot) drawLine(context, baseline - metrics.roundOvershoot * fontSize, options.roundOvershootColor);
+
+    // Draw pointed overshoot line
+    if (options.pointedOvershoot) drawLine(context, baseline - metrics.pointedOvershoot * fontSize, options.pointedOvershootColor);
+
     // Draw top line
     if (options.emTop) drawLine(context, baseline - metrics.emTop * fontSize, options.emTopColor);
 
@@ -134,7 +142,7 @@ function render() {
 
     context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px "${options.fontFamily}"`;
     context.textAlign = 'center';
-    context.fillText('ÁIl1Fdgpxi', width / 2, baseline);
+    context.fillText('ÁOIl1Fdgpxi', width / 2, baseline);
 
     fontSizeStatus.innerHTML = `${fontSize}px`;
     lineHeightStatus.innerHTML = `${round(metrics.lineHeight * 100, 1)}%`;
