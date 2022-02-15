@@ -38,6 +38,9 @@ const lineHeightStatus = controls.querySelector('#lineHeight');
 const copyButton = controls.querySelector('#copyButton');
 const copyBanner = controls.querySelector('#copyBanner');
 
+const lines = [];
+const lineCaptions = [];
+
 function getOptions() {
     const options = {};
     for (const input of inputs) {
@@ -72,6 +75,11 @@ function getContext() {
     return context;
 }
 
+function addLine(options) {
+    lines.push({caption: options.caption, y: options.y, color: options.color});
+    drawLine(options.context, options.y, options.color);
+}
+
 function drawLine(context, y, color) {
     const width = context.canvas.width / DPR;
     context.save();
@@ -103,47 +111,49 @@ function render() {
 
     context.clearRect(0, 0, width, height);
 
-    // Draw baseline
-    if (options.baseline) drawLine(context, baseline, options.baselineColor);
+    lines.splice(0, lines.length);
 
-    // Draw ascent line
-    if (options.ascent) drawLine(context, baseline - metrics.ascent * fontSize, options.ascentColor);
+    // Add baseline
+    if (options.baseline) addLine({caption: 'Baseline', y: baseline, color: options.baselineColor, context});
 
-    // Draw descent line
-    if (options.descent) drawLine(context, baseline - metrics.descent * fontSize, options.descentColor);
+    // Add ascent line
+    if (options.ascent) addLine({caption: 'Ascent', y: baseline - metrics.ascent * fontSize, color: options.ascentColor, context});
 
-    // Draw x-height line
-    if (options.xHeight) drawLine(context, baseline - metrics.xHeight * fontSize, options.xHeightColor);
+    // Add descent line
+    if (options.descent) addLine({caption: 'Descent', y: baseline - metrics.descent * fontSize, color: options.descentColor, context});
 
-    // Draw capital height line
-    if (options.capHeight) drawLine(context, baseline - metrics.capHeight * fontSize, options.capHeightColor);
+    // Add x-height line
+    if (options.xHeight) addLine({caption: 'x-Height', y: baseline - metrics.xHeight * fontSize, color: options.xHeightColor, context});
 
-    // Draw figure height line
-    if (options.figHeight) drawLine(context, baseline - metrics.figHeight * fontSize, options.figHeightColor);
+    // Add capital height line
+    if (options.capHeight) addLine({caption: 'Capital Height', y: baseline - metrics.capHeight * fontSize, color: options.capHeightColor, context});
 
-    // Draw tittle line
-    if (options.tittleHeight) drawLine(context, baseline - metrics.tittleHeight * fontSize, options.tittleHeightColor);
+    // Add figure height line
+    if (options.figHeight) addLine({caption: 'Figure Height', y: baseline - metrics.figHeight * fontSize, color: options.figHeightColor, context});
 
-    // Draw round overshoot line
-    if (options.roundOvershoot) drawLine(context, baseline - metrics.roundOvershoot * fontSize, options.roundOvershootColor);
+    // Add tittle line
+    if (options.tittleHeight) addLine({caption: 'Tittle Height', y: baseline - metrics.tittleHeight * fontSize, color: options.tittleHeightColor, context});
 
-    // Draw pointed overshoot line
-    if (options.pointedOvershoot) drawLine(context, baseline - metrics.pointedOvershoot * fontSize, options.pointedOvershootColor);
+    // Add round overshoot line
+    if (options.roundOvershoot) addLine({caption: 'Round Letters Overshoot', y: baseline - metrics.roundOvershoot * fontSize, color: options.roundOvershootColor, context});
 
-    // Draw top line
-    if (options.emTop) drawLine(context, baseline - metrics.emTop * fontSize, options.emTopColor);
+    // Add pointed overshoot line
+    if (options.pointedOvershoot) addLine({caption: 'Pointed Letters Overshoot', y: baseline - metrics.pointedOvershoot * fontSize, color: options.pointedOvershootColor, context});
 
-    // Draw middle line
-    if (options.emMiddle) drawLine(context, baseline - metrics.emMiddle * fontSize, options.emMiddleColor);
+    // Add top line
+    if (options.emTop) addLine({caption: 'Top', y: baseline - metrics.emTop * fontSize, color: options.emTopColor, context});
 
-    // Draw bottom line
-    if (options.emBottom) drawLine(context, baseline - metrics.emBottom * fontSize, options.emBottomColor);
+    // Add middle line
+    if (options.emMiddle) addLine({caption: 'Middle', y: baseline - metrics.emMiddle * fontSize, color: options.emMiddleColor, context});
 
-    // Draw bbox top line
-    if (options.bboxTop && metrics.bboxTop !== undefined) drawLine(context, baseline - metrics.bboxTop * fontSize, options.bboxTopColor);
+    // Add bottom line
+    if (options.emBottom) addLine({caption: 'Bottom', y: baseline - metrics.emBottom * fontSize, color: options.emBottomColor, context});
 
-    // Draw bbox bottom line
-    if (options.bboxBottom && metrics.bboxBottom !== undefined) drawLine(context, baseline - metrics.bboxBottom * fontSize, options.bboxBottomColor);
+    // Add bbox top line
+    if (options.bboxTop && metrics.bboxTop !== undefined) addLine({caption: 'BBox Top', y: baseline - metrics.bboxTop * fontSize, color: options.bboxTopColor, context});
+
+    // Add bbox bottom line
+    if (options.bboxBottom && metrics.bboxBottom !== undefined) addLine({caption: 'BBox Bottom', y: baseline - metrics.bboxBottom * fontSize, color: options.bboxBottomColor, context});
 
     context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px "${options.fontFamily}"`;
     context.textAlign = 'center';
@@ -205,4 +215,28 @@ copyButton.addEventListener('click', () => {
             copyBanner.style.display = 'none';
         }, 1500);
     });
+});
+
+window.addEventListener('mousemove', (event) => {
+    const canvasY = event.clientY - header.offsetHeight;
+
+    while (lineCaptions.length > 0) {
+        const caption = lineCaptions.shift();
+        document.body.removeChild(caption);
+    }
+
+    for (const line of lines) {
+        if (Math.abs(canvasY - line.y) <= 3) {
+            const caption = document.createElement('span');
+            caption.className = 'caption';
+            caption.innerHTML = line.caption;
+            Object.assign(caption.style, {
+                top: `${event.clientY}px`,
+                left: `${event.clientX + 10}px`,
+                backgroundColor: line.color
+            });
+            document.body.appendChild(caption);
+            lineCaptions.push(caption);
+        }
+    }
 });

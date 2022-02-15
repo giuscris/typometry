@@ -75,6 +75,11 @@ button:hover {
     width: 100%;
     outline: none;
     display: none;
+    cursor: default;
+}
+
+.text:focus {
+    cursor: text;
 }
 
 .controls {
@@ -108,4 +113,16 @@ button:hover {
     padding: 0.5rem 1rem;
     border-radius: 4px;
     white-space: nowrap;
+}
+
+.caption {
+    position: fixed;
+    transform: translateY(-50%);
+    font-size: 0.875rem;
+    background-color: #000000;
+    color: #ffffff;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    user-select: none;
 }
