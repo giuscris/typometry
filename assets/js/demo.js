@@ -149,7 +149,6 @@ function render() {
     controls.querySelectorAll('.value').forEach((element) => element.innerHTML = metrics[element.getAttribute('data-of')]);
 }
 
-
 for (const input of inputs) {
     input.addEventListener('change', () => {
         status.innerHTML = '⏳';
@@ -168,3 +167,5 @@ window.addEventListener('load', () => {
 });
 
 window.addEventListener('resize', render);
+
+window.addEventListener('focus', render);
