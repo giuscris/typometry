@@ -42,7 +42,7 @@ button:hover {
 }
 
 ::selection {
-    background-color: #fffc3b;
+    background-color: rgba(255, 252, 59, 0.61);
 }
 
 ::placeholder {
@@ -65,6 +65,16 @@ button:hover {
     color: #3bceff;
     font-size: 2rem;
     font-weight: 600;
+}
+
+.text {
+    position: fixed;
+    text-align: center;
+    padding: 0;
+    border: 0;
+    width: 100%;
+    outline: none;
+    display: none;
 }
 
 .controls {

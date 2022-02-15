@@ -28,6 +28,8 @@ const canvas = document.getElementById('canvas');
 const header = document.querySelector('.header');
 const controls = document.querySelector('.controls');
 
+const textInput = document.querySelector('#text');
+
 const inputs = controls.querySelectorAll('input, select');
 const status = controls.querySelector('#status');
 const fontSizeStatus = controls.querySelector('#fontSize');
@@ -145,7 +147,20 @@ function render() {
 
     context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px "${options.fontFamily}"`;
     context.textAlign = 'center';
-    context.fillText('ÁOIl1Fdgpxi', width / 2, baseline);
+
+    if (metrics.bboxHeight) {
+        Object.assign(textInput.style, {
+            display: 'block',
+            top: `${header.offsetHeight + baseline - metrics.bboxTop * fontSize}px`,
+            fontFamily: options.fontFamily,
+            fontStyle: options.fontStyle,
+            fontWeight: options.fontWeight,
+            fontSize: `${fontSize}px`,
+            lineHeight: metrics.bboxHeight
+        });
+    } else {
+        context.fillText(textInput.value, width / 2, baseline);
+    }
 
     fontSizeStatus.innerHTML = `${fontSize}px`;
     lineHeightStatus.innerHTML = `${round(metrics.lineHeight * 100, 1)}%`;
