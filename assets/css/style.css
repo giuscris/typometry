@@ -17,7 +17,9 @@ canvas {
     font-kerning: none;
 }
 
-input, select {
+input,
+select,
+button {
     border: 1px solid #3bceff;
     border-radius: 4px;
     padding: 0.25rem 0.5rem;
@@ -32,6 +34,11 @@ input[type=color] {
     border: 0;
     padding: 0.25rem 0;
     vertical-align: middle;
+}
+
+button:hover {
+    background-color: #3bceff;
+    color: #ffffff;
 }
 
 ::selection {
@@ -77,4 +84,18 @@ input[type=color] {
 
 .value {
     color: #9e9e9e;
+}
+
+.banner {
+    display: none;
+    position: absolute;
+    top: -1rem;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.875rem;
+    background-color: #3bceff;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    white-space: nowrap;
 }

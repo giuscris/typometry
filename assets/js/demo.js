@@ -33,6 +33,9 @@ const status = controls.querySelector('#status');
 const fontSizeStatus = controls.querySelector('#fontSize');
 const lineHeightStatus = controls.querySelector('#lineHeight');
 
+const copyButton = controls.querySelector('#copyButton');
+const copyBanner = controls.querySelector('#copyBanner');
+
 function getOptions() {
     const options = {};
     for (const input of inputs) {
@@ -169,3 +172,22 @@ window.addEventListener('load', () => {
 window.addEventListener('resize', render);
 
 window.addEventListener('focus', render);
+
+copyButton.addEventListener('click', () => {
+    const options = getOptions();
+
+    if (!options.fontFamily) {
+        return;
+    }
+
+    const metrics = getMetrics({fontFamily: options.fontFamily, fontWeight: options.fontWeight, fontStyle: options.fontStyle});
+
+    const text = JSON.stringify(metrics, null, 4);
+
+    navigator.clipboard.writeText(text).then(() => {
+        copyBanner.style.display = 'block';
+        setTimeout(() => {
+            copyBanner.style.display = 'none';
+        }, 1500);
+    });
+});
