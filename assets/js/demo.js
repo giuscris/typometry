@@ -235,7 +235,11 @@ window.addEventListener('load', () => {
 
 window.addEventListener('resize', render);
 
-window.addEventListener('focus', render);
+window.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        render();
+    }
+});
 
 copyButton.addEventListener('click', () => {
     const options = getOptions();
