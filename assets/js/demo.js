@@ -205,9 +205,6 @@ function render() {
     // Add bbox bottom line
     if (options.bboxBottom && metrics.bboxBottom !== undefined) addLine({caption: 'BBox Bottom', y: baseline - metrics.bboxBottom * fontSize, color: options.bboxBottomColor, context});
 
-    context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px ${quoteFontFamily(options.fontFamily)}`;
-    context.textAlign = 'center';
-
     if (metrics.bboxHeight) {
         Object.assign(textInput.style, {
             display: 'block',
@@ -220,6 +217,8 @@ function render() {
         });
     } else {
         textInput.style.display = 'none';
+        context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px ${quoteFontFamily(options.fontFamily)}`;
+        context.textAlign = 'center';    
         context.fillText(textInput.value, width / 2, baseline);
     }
 
@@ -265,15 +264,8 @@ window.addEventListener('visibilitychange', () => {
 
 copyButton.addEventListener('click', () => {
     const options = getOptions();
-
-    if (!options.fontFamily) {
-        return;
-    }
-
     const metrics = getMetrics({fontFamily: options.fontFamily, fontWeight: options.fontWeight, fontStyle: options.fontStyle});
-
     const text = JSON.stringify(metrics, null, 4);
-
     navigator.clipboard.writeText(text).then(() => displayBanner('✅ Metrics copied to clipboard!', 2000));
 });
 
