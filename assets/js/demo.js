@@ -40,6 +40,8 @@ const status = controls.querySelector('#status');
 const fontSizeStatus = controls.querySelector('#fontSize');
 const lineHeightStatus = controls.querySelector('#lineHeight');
 
+const valueLabels = controls.querySelectorAll('.value');
+
 const fontWeightOptions = controls.querySelectorAll('[name=fontWeight] option');
 
 const copyButton = controls.querySelector('#copyButton');
@@ -116,6 +118,10 @@ function drawLine(context, y, color) {
 
 function round(number, decimals) {
     return +number.toFixed(decimals);
+}
+
+function inArray(value, array) {
+    return array.indexOf(value) >= 0;
 }
 
 function render() {
@@ -209,11 +215,18 @@ function render() {
     }
 
     const weights = getWeights(options);
-    fontWeightOptions.forEach((element) => element.disabled = weights.indexOf(parseInt(element.value)) === -1);
+
+    for (const option of fontWeightOptions) {
+        option.disabled = inArray(parseInt(option.value), weights);
+    }
 
     fontSizeStatus.innerHTML = `${fontSize}px`;
     lineHeightStatus.innerHTML = `${round(metrics.lineHeight * 100, 1)}%`;
-    controls.querySelectorAll('.value').forEach((element) => element.innerHTML = metrics[element.getAttribute('data-of')]);
+
+    for (const label of valueLabels) {
+        const value = label.getAttribute('data-of');
+        label.innerHTML = round(metrics[value], 3);
+    }
 }
 
 for (const input of inputs) {
