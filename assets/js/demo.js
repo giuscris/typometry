@@ -211,6 +211,7 @@ function render() {
             lineHeight: metrics.bboxHeight
         });
     } else {
+        textInput.style.display = 'none';
         context.fillText(textInput.value, width / 2, baseline);
     }
 
