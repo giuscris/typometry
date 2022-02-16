@@ -45,7 +45,6 @@ const valueLabels = controls.querySelectorAll('.value');
 const fontWeightOptions = controls.querySelectorAll('[name=fontWeight] option');
 
 const copyButton = controls.querySelector('#copyButton');
-const copyBanner = controls.querySelector('#copyBanner');
 
 const lines = [];
 const lineCaptions = [];
@@ -124,6 +123,14 @@ function inArray(value, array) {
     return array.indexOf(value) >= 0;
 }
 
+function displayBanner(text, duration) {
+    const banner = document.createElement('div');
+    banner.className = 'banner';
+    banner.innerHTML = text;
+    controls.appendChild(banner);
+    setTimeout(() => controls.removeChild(banner), duration);
+}
+
 function render() {
     let options = getOptions();
 
@@ -135,6 +142,7 @@ function render() {
 
     // Restore previous options if the new font is not available
     if (!options.fontFamily || !detectFont(options.fontFamily)) {
+        displayBanner('❌ The requested font family is not available!', 2000);
         setOptions(previousOptions);
         options = previousOptions;
     } else {
@@ -266,12 +274,7 @@ copyButton.addEventListener('click', () => {
 
     const text = JSON.stringify(metrics, null, 4);
 
-    navigator.clipboard.writeText(text).then(() => {
-        copyBanner.style.display = 'block';
-        setTimeout(() => {
-            copyBanner.style.display = 'none';
-        }, 1500);
-    });
+    navigator.clipboard.writeText(text).then(() => displayBanner('✅ Metrics copied to clipboard!', 2000));
 });
 
 window.addEventListener('mousemove', (event) => {
