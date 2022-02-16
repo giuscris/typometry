@@ -1,5 +1,9 @@
+function quoteFontFamily(fontFamily) {
+    return fontFamily.match(/[^a-z\-]/i) ? `"${fontFamily}"` : fontFamily;
+}
+
 function getFontProperty(options) {
-    return `${options.fontStyle} ${options.fontWeight} ${options.fontSize}px "${options.fontFamily}"`;
+    return `${options.fontStyle} ${options.fontWeight} ${options.fontSize}px ${quoteFontFamily(options.fontFamily)}`;
 }
 
 function getPixelBoundaries(context) {
