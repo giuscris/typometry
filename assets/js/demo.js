@@ -226,7 +226,7 @@ function render() {
 
     for (const label of valueLabels) {
         const value = label.getAttribute('data-of');
-        label.innerHTML = round(metrics[value], 3);
+        label.innerHTML = metrics[value] !== undefined ? round(metrics[value], 3) : 'N/A';
     }
 }
 
