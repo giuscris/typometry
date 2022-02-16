@@ -1,4 +1,5 @@
 import { measureFont } from '../../typemetry.js';
+import { quoteFontFamily, detectFont, detectFontWeights } from './utils.js';
 
 const DPR = window.devicePixelRatio || 2;
 
@@ -24,6 +25,10 @@ const METRICS = {
     }
 };
 
+const WEIGHTS = {
+    'georgia normal': [400, 600]
+};
+
 const canvas = document.getElementById('canvas');
 const header = document.querySelector('.header');
 const controls = document.querySelector('.controls');
@@ -35,11 +40,15 @@ const status = controls.querySelector('#status');
 const fontSizeStatus = controls.querySelector('#fontSize');
 const lineHeightStatus = controls.querySelector('#lineHeight');
 
+const fontWeightOptions = controls.querySelectorAll('[name=fontWeight] option');
+
 const copyButton = controls.querySelector('#copyButton');
 const copyBanner = controls.querySelector('#copyBanner');
 
 const lines = [];
 const lineCaptions = [];
+
+let previousOptions = {};
 
 function getOptions() {
     const options = {};
@@ -53,9 +62,26 @@ function getOptions() {
     return options;
 }
 
+function setOptions(data) {
+    for (const input of inputs) {
+        if (data.hasOwnProperty(input.name)) {
+            if (input.type !== 'radio' && input.type !== 'checkbox') {
+                input.value = data[input.name];
+            } else {
+                input.checked = data[input.name];
+            }
+        }
+    }
+}
+
 function getMetrics(options) {
     const key = `${options.fontFamily} ${options.fontWeight} ${options.fontStyle}`.toLowerCase();
     return key in METRICS ? METRICS[key] : METRICS[key] = measureFont({...options, fontSize: 1000});
+}
+
+function getWeights(options) {
+    const key = `${options.fontFamily} ${options.fontStyle}`.toLowerCase();
+    return key in WEIGHTS ? WEIGHTS[key] : WEIGHTS[key] = detectFontWeights(options);
 }
 
 function getContext() {
@@ -93,12 +119,22 @@ function round(number, decimals) {
 }
 
 function render() {
-    const options = getOptions();
+    let options = getOptions();
 
-    if (!options.fontFamily) {
-        return;
+    // Set font weight to 400 if a new font family is entered
+    if (options.fontFamily !== previousOptions.fontFamily) {
+        options.fontWeight = 400;
+        setOptions(options);
     }
 
+    // Restore previous options if the new font is not available
+    if (!options.fontFamily || !detectFont(options.fontFamily)) {
+        setOptions(previousOptions);
+        options = previousOptions;
+    } else {
+        previousOptions = options;
+    }
+    
     const metrics = getMetrics({fontFamily: options.fontFamily, fontWeight: options.fontWeight, fontStyle: options.fontStyle});
 
     const context = getContext();
@@ -155,14 +191,14 @@ function render() {
     // Add bbox bottom line
     if (options.bboxBottom && metrics.bboxBottom !== undefined) addLine({caption: 'BBox Bottom', y: baseline - metrics.bboxBottom * fontSize, color: options.bboxBottomColor, context});
 
-    context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px "${options.fontFamily}"`;
+    context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px ${quoteFontFamily(options.fontFamily)}`;
     context.textAlign = 'center';
 
     if (metrics.bboxHeight) {
         Object.assign(textInput.style, {
             display: 'block',
             top: `${header.offsetHeight + baseline - metrics.bboxTop * fontSize}px`,
-            fontFamily: `"${options.fontFamily}"`,
+            fontFamily: quoteFontFamily(options.fontFamily),
             fontStyle: options.fontStyle,
             fontWeight: options.fontWeight,
             fontSize: `${fontSize}px`,
@@ -171,6 +207,9 @@ function render() {
     } else {
         context.fillText(textInput.value, width / 2, baseline);
     }
+
+    const weights = getWeights(options);
+    fontWeightOptions.forEach((element) => element.disabled = weights.indexOf(parseInt(element.value)) === -1);
 
     fontSizeStatus.innerHTML = `${fontSize}px`;
     lineHeightStatus.innerHTML = `${round(metrics.lineHeight * 100, 1)}%`;
