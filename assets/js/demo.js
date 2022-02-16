@@ -218,7 +218,7 @@ function render() {
     const weights = getWeights(options);
 
     for (const option of fontWeightOptions) {
-        option.disabled = inArray(parseInt(option.value), weights);
+        option.disabled = !inArray(parseInt(option.value), weights);
     }
 
     fontSizeStatus.innerHTML = `${fontSize}px`;
