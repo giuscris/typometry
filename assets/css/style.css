@@ -28,6 +28,14 @@ button {
     font-size: 1rem;
     margin-bottom: 0.5rem;
     background-color: transparent;
+    line-height: inherit;
+}
+
+select {
+    -webkit-appearance: none;
+    padding-right: 1.5rem;
+    background: #ffffff url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 24'><path d='M0 0h32L16 24z'/></svg>") no-repeat right .5rem center;
+    background-size:8px 6px
 }
 
 input[type=color] {
