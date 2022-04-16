@@ -208,12 +208,12 @@ function render() {
     if (metrics.bboxHeight) {
         Object.assign(textInput.style, {
             display: 'block',
-            top: `${header.offsetHeight + baseline - metrics.bboxTop * fontSize}px`,
+            top: `${header.offsetHeight + baseline - metrics.bboxTop * fontSize - (metrics.lineHeight - metrics.bboxHeight) * fontSize / 2}px`,
             fontFamily: quoteFontFamily(options.fontFamily),
             fontStyle: options.fontStyle,
             fontWeight: options.fontWeight,
             fontSize: `${fontSize}px`,
-            lineHeight: metrics.bboxHeight
+            lineHeight: 1
         });
     } else {
         textInput.style.display = 'none';
