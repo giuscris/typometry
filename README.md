@@ -1,15 +1,15 @@
-# 📏 Typemetry
+# 📏 Typometry
 
-**A tiny JavaScript module to get typographic measures.** [DEMO 😎](https://giuscris.github.io/typemetry)
+**A tiny JavaScript module to get typographic measures.** [DEMO 😎](https://giuscris.github.io/typometry)
 
-![](assets/images/typemetry.png)
+![](assets/images/typometry.png)
 
 ## Usage
 
 Getting typographic measures about a typeface is as easy as importing and calling `measureFont()`:
 
 ```js
-import { measureFont } from './typemetry.js';
+import { measureFont } from './typometry.js';
 
 const metrics = measureFont({
     fontFamily: 'Georgia',

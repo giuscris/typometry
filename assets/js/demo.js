@@ -1,4 +1,4 @@
-import { measureFont } from '../../typemetry.js';
+import { measureFont } from '../../typometry.js';
 import { quoteFontFamily, detectFont, detectFontWeights } from './utils.js';
 
 const DPR = window.devicePixelRatio || 2;
@@ -148,7 +148,7 @@ function render() {
     } else {
         previousOptions = options;
     }
-    
+
     const metrics = getMetrics({fontFamily: options.fontFamily, fontWeight: options.fontWeight, fontStyle: options.fontStyle});
 
     const context = getContext();
@@ -218,7 +218,7 @@ function render() {
     } else {
         textInput.style.display = 'none';
         context.font = `${options.fontStyle} ${options.fontWeight} ${fontSize}px ${quoteFontFamily(options.fontFamily)}`;
-        context.textAlign = 'center';    
+        context.textAlign = 'center';
         context.fillText(textInput.value, width / 2, baseline);
     }
 
